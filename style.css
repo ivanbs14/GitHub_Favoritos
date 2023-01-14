@@ -1,0 +1,236 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+:root {
+    font-size: 62.5%;
+
+    --ff-primary: 'Roboto', sans-serif;
+
+    /* Cores */
+    --text-color: #FFFFFF;
+
+    --hue: 194;
+    --primary-color: hsl(var(--hue), 100%, 63%);
+    --head-color: hsla(var(--hue), 72%, 13%);
+    --btnSearch-color: #065E7C;
+    --bglineOne-color: #06161b;
+    --bglinetwo-color: #071e23;
+    --bgnonefav-color: #030B0D;
+    --light-blue: hsl(191, 31%, 42%);
+    --red-color: #F75A68;
+    --emptyS-color: #7C7C8A;
+    --bgbody-color: #000000;
+}
+
+body {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    background-color: var(--bgbody-color);
+
+}
+
+body * {
+    font-family: var(--ff-primary);
+}
+
+#app {
+    max-width: 1120px;
+    padding: 2rem;
+    margin: 0 auto;
+}
+
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    margin: 5rem 0 3rem 0;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+}
+
+/* acessibilidade leitor de tela com label */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.search input {
+    width: 462px;
+    height: 3.2rem;
+    margin-right: 0.8rem;
+    border: 1px solid var(--bglinetwo-color);
+    border-radius: .4rem;
+    padding: 1.6rem;
+    
+    background-color: var(--bglinetwo-color);
+    color: var(--emptyS-color);
+    font-size: 1.6rem;
+    height: 4.8rem;
+}
+
+.search button {
+    background-color: var(--btnSearch-color);
+    color: var(--text-color);
+    font-size: 1.4rem;
+    border-radius: .4rem;
+    padding: 1.2rem 3.2rem;
+    height: 4.8rem;
+    border: none;
+    
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+.search button:hover, button:hover svg path {
+    background-color: var(--text-color);
+    color: var(--btnSearch-color);
+    fill: var(--btnSearch-color);
+}
+
+/* config tabela */
+.table {
+    border: 1px solid var(--light-blue);
+    border-radius: 1.2rem;
+    overflow: hidden;
+
+    max-height: 68.8rem;
+    overflow-y: overlay;
+}
+
+table * {
+    font-size: 1.4rem;
+    color: var(--text-color);
+}
+
+/* collapse junta as colunas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: var(--head-color);
+    text-align: left;
+    font-weight: normal;
+    padding: 1.5rem;
+}
+
+/* preenchimento intercalado das linhas */
+table tr:nth-child(odd) {
+    background: var(--bglineOne-color);
+}
+
+table tr:nth-child(even) {
+    background: var(--bglinetwo-color);
+
+    border-top: 1px solid var(--light-blue);
+    border-bottom: 1px solid var(--light-blue);
+}
+
+/* arredondamento das bordas superiores left e right*/
+table th:first-child {
+    width: 35vw;
+}
+
+.table::-webkit-scrollbar {
+    width: 2.2rem;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: var(--red-color);
+    border-radius: 1rem;
+
+    border: .8rem solid rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+}
+
+table td {
+    padding: 1.5rem;
+    text-align: left;
+
+}
+
+td.user {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    
+}
+
+/* config imagem do usuario,*/
+td.user img {
+    width: 5rem;
+    height: 5rem;
+
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+td.user a {
+    text-decoration: none;
+}
+
+td.user a p {
+    font-weight: bold;
+
+}
+
+td .remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    color: var(--red-color);
+}
+
+/* page not Favorites */
+.empty-state {
+    font-family: var(--ff-primary);
+    background-color: var(--bgnonefav-color);
+    height: 100%;
+
+    display: flex;
+    color: var(--emptyS-color);
+}
+
+.no-favs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6rem;
+
+    margin: 11rem auto 18rem;
+}
+
+.no-favs svg {
+    width: 13.2rem;
+    height: 12.5rem;
+}
+
+.no-favs h2 {
+    font-size: 4rem;
+    line-height: 2.5rem;
+    color: var(--no-favs-color);
+}
+
+/* colocar sempre por ultimo dica! */
+.hide {
+    display: none;
+}

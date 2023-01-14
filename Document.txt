@@ -1,0 +1,152 @@
+GITHUB FAVORITES
+
+criar uma pagina web que acessa a API do GITHUB para acessar os dados do usuario.
+
+1- index HTML 
+    div app - contem cabeçalho header, input de busca.
+    criar tabela com (table), cabeçalho com (thead), que contem 1 linha (tr) com 4 colunas (th).
+    conteudo recebido pela api com (tbody), 1 linha com (tr), a quantidade de linha vai variar de 
+    acordo com o que é solicitado na API.
+    4 colunas (td), coluna 1 recebe img, a (no link add target(para abrir em outra janela)), p, span.
+    colunas 2 e 3 recebem informaçoes da api. (repositorios, e seguidores)
+    coluna 4 recebe (button).
+    
+2- style.css
+    zerado configuraçoes padrao de pagina.
+    configuramos responsividade com rem.
+    Adicionado configuraçoes de texto e cores.
+    body * (indica que todo elemento dentro de body recebe a propiedade do body)
+
+3- ATENÇAO: Sobre o label
+    o leitor de tela por padrao nao lê o texto do placeholder (input).
+    foi criado o label e no css configuramos a classe para que o texto label fique sobre o input,
+    porem oculto. Sem atrapalhar a funcionalidade do input.
+
+4- style.css_2
+    configurado h1 do header, input e button.
+
+5- style.css_3
+    configurado tabela:
+        table: collapse junta as colunas.
+        td.user img: cover espande a imagem no tamanho da tag img.
+        table th:first-child: para selecionar a primeira coluna
+        table th:last-child: para selecionar a ultima coluna
+        (even): Indica se a linha for impar, realize a açao.
+        (odd): Indica se a linha for par, realize a açao.
+
+        button(remove)
+        tabela box-shadow.
+
+6- js config
+    arquivo favorites.js
+    classe que vai conter a lógica dos dado, como os dados seram utilizados.
+        class Favorites: vai passar qual root vai querer utilizar. No caso o (#app).
+
+    classe que vai criar a vizualizaçao e eventos do HTML
+        FavoritesView: com o extend estaou unindo as classes e puxando tudo que tem na Favorites.
+
+    function Update: cada vez que for realizado um evento na pagina ela vai ser ativada.
+    
+    function removeAllTr
+        const tbody = esta procurando e acessando o tbody
+        querySelectorAll('tr') = selecionando as linhas.
+        para cada tr(linha) execute a function
+        forEach() = recebe uma function como arqgumento.
+
+    arquivo main.js
+        importei FavoritesView
+        informei o elemento recebecido pela FavoritesView(#app)
+
+7- js config
+    arquivo favorites.js
+    function createRow: criamos uma tr(linha) pelo javascript
+    function load(): mapeamento dos dados
+
+    this.tbody: relocado para a function Update
+    function removeAllTr:
+        this.entries.forEach; editamos para receber os dados da function load e adicionar nos modelos de tr(linha.)
+        adicionamos o efeito de click do button,
+            (confirma) retorna um alert com um boolean veradeiro ou false ao click cancel/ok
+            criando uma condiçao if, para receber a function delete (localizada no Update)
+        function Update:
+            criado function delete:
+                recria um array (entries) usando a logica boolean se true/false para deletar uma linha.
+
+8- Ao atualizar a pagina, as linhas deletadas voltam. 
+Portanto no localstorage do browser vamos receber esta atualizaçao do delete:
+        function load: criamos um repositorio no browser para armazenar os dados.
+            deletamos:[
+                        {
+                            login: 'ivanbs14',
+                            name: 'Ivan Barbosa',
+                            public_repos: '80',
+                            followers: '100'
+                        },
+                        
+                        {
+                            login: 'georgericardo26',
+                            name: 'George Ricardo',
+                            public_repos: '100',
+                            followers: '200'
+                        },
+                
+                    ]
+        Pois vamos receber este array do browser. (que recebera os dados da API do git)
+            this.entries   => adicionamos a variavel
+            JSON.parse(    => transforma strings em elementos json
+            localStorage.getItem('@github-favorites:') => criar um repositorio que recebe os dados e os transforma em strigs.
+            ) || []        => se o repositorio estiver vazio, retorne um array
+        
+9- Conectando com a API do GITHUB
+        criado uma class GithubUser, contendo uma
+        function search:
+            consulta a api endpoint, return os dados.
+            dentro dos dados recebidos com o data.json(): convertemos o arquivo
+            com a promisse .then, destruturamos o data e retiramos de dentro os dados:
+                login, name, public_repos, followers
+
+10- Configurando input e button do search
+        Dentro da class FavoritesView
+        function onadd(): criamos o evento de clck e criamos uma aerofunction que recebe o valor do input junto com o click do button.
+        E passamos esse valor para uma:
+        function add(username): Dentro da class Favorites:
+            a function add() foi criada como uma function asincrona async informa a sincronia e await informa aguarde a execuçao da function.
+
+11- Tratamento de erros com Try/catch
+    Class Favorites: function add():
+        adicionamos o retorno da pesquisa do usuario na API em um try(informando com o (if) se ele nao encontrar
+            o usuario passe o erro throw, para o catch e exiba no alert)
+
+    Atualizaçao da tabela com os dados da API (Dentro do try: com o):
+        this.entries = [user, ...this.entries]:
+            this.entries => informa que para essa propriedade
+            = [user,     => o array ou tudo que estiver dentro de users no array.
+             ...this.entries]  => será subristuido iten por iten da pesquisa na api do (Github no caso)
+
+12- salvando pesquisas da tabela, no localStorage
+    class Favorites:
+     create function save():
+        localStorage.setItem('@github-favorites:', => vai dentro do meu localStorage
+         JSON.stringify(this.entries))             => e salva o arquivo json como stringify.
+
+         lembrar de chamar a function no try e na function delete
+
+13- Add funçao de usuario existente
+        Na function add():
+            criado uma const userExistents: onde antes de procurar na API ao digitar o usuario no input de busca
+            vai ser consultado na tabela se esse usuario ja existe. Se exister é acionado uma condiçao de error (if(userExistents)),
+            que vai exibir uma mensagem de alert.
+
+14- bordas personalizadas e flixiveis no table
+        Foi criado uma div table:
+        No css foi usada 2 configuraçoes para personalizar a borda no table:
+            max-height: 68.8rem;
+            overflow: A propriedade CSS overflowcontrola o que acontece com o conteúdo que é grande demais para caber em uma área.; 
+            overflow: hidden; Com o hiddenvalor, o estouro é recortado e o restante do conteúdo é ocultado: 
+            overflow-y: overlay; As propriedades overflow-xe overflow-yespecificam se o estouro do conteúdo deve ser alterado apenas horizontalmente ou verticalmente (ou ambos):
+            
+15- recebendo funçao de ocultar div de não favorites:
+        Foi feita uma function emptyState:
+            passado uma condiçao que quando o this.entries for igual a 0.
+                remove ou add class hide na div(.emptyState)
+        (Dica add no css o .hide no dinal do codigo )
